@@ -9,7 +9,9 @@ const {getUsers,
 const router = express.Router();
 
 router.route('/').get(getUsers).post(postUser);
-router.route('/:id').get(getUser).put(putUser).delete(deliteUser);
+router.route('/people').get(getPeople);
+router.route('/id').get(getUser).put(putUser).delete(deliteUser);
+
 
 // export route
 
