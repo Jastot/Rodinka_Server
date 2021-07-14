@@ -1,3 +1,4 @@
+const { exception } = require('console');
 const http = require('http');
 
 function postCNN(buffer, callback){
@@ -28,7 +29,7 @@ function postCNN(buffer, callback){
         });
     });
     req.on('error', err=>{
-        return JSON.stringify({"error": err});
+        throw exception(`HTTP REQUEST ERROR: ${err}`);
     });
     req.write(data);
     req.end();
