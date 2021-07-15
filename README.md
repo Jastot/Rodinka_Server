@@ -7,5 +7,5 @@
     params: `"userType"`
 - `GET//api/users/user/`; get user by id; 
     params: `"_id"`
-- `POST//api/users/user`; creates new user; 
+- `POST//api/users/user`; creates new user; \n
     params: `"surname", "name", ?"additional_name", "dateOfBirth"(YYYY-mm-dd), "userType" ("client"/"doctor"/"admin")`
