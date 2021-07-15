@@ -4,6 +4,7 @@ dotenv.config({path: './config/config.env'});
 const morgan = require("morgan");
 const cors =  require("cors");
 const express =  require("express");
+const fileUpload = require('express-fileupload');
 const app = express();
 
 
@@ -13,16 +14,19 @@ const connectDB = require('./config/db.js');
 connectDB();
 
 // connect router
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routers/users');
+const photoRouter = require('./routers/photo');
 
 // use router
 app.use(express.json());
+app.use(fileUpload());
 
 if (process.env.NODE_ENV == "developvent"){
     app.use(morgan('dev'));
 }
 app.use(cors());
 app.use('/api/users', usersRouter);
+app.use('/api/photos', photoRouter);
 
 // start server
 const PORT = process.env.PORT;

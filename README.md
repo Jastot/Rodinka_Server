@@ -13,4 +13,9 @@
     params: `"_id"`  
 - `PUT//api/users/user`; modifies a user;  
     params: `"_id"` and params which you would like to modify  
-- `PUT//api/users/user/photo`; add a consultation to a user; doesnt work xd
+- `PUT//api/users/user/photo`; add a consultation to a user; doesnt work xd  
+  
+#### Photos `(/api/photos)`
+- `POST//api/photos/upload_photo`; add a photo;  
+    send as BLOB using form or something like that;  
+    returns a JSON with either `"_id"` or `"error"`

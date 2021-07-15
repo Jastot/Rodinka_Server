@@ -4,19 +4,19 @@ const UserSchema = new mongoose.Schema({
         type: String,
         // : true,
         required: [true, "Surname is required"],
-        trin: true, //delite probels,
+        trim: true, //delite probels,
         maxlength: [100, "Max length is 100 characters"],
     },
     name: {
         type: String,
         require: [true, "Name is required"],
-        trin: true, //delite probels,
+        trim: true, //delite probels,
         maxlength: [100, "Max length is 100 characters"],
     },
     additional_name: {
         type: String,
         require: false,
-        trin: true, //delite probels,
+        trim: true, //delite probels,
         maxlength: [100, "Max length is 100 characters"],
     },
     dateOfBirth: {
@@ -32,16 +32,7 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    consultation: [
-        {
-            date: String,
-            diagnosis:String,
-            comments:String,
-            photos: [],
-        }
-    ],
-
-    
+    consultations: [String]
 });
 
 module.exports = mongoose.model('User', UserSchema);
