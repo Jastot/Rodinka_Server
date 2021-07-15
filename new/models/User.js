@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
     additional_name: {
         type: String,
         require: false,
-        trin: true, //delite probels,
+        trim: true, //delite probels,
         maxlength: [100, "Max length is 100 characters"],
     },
     dateOfBirth: {
@@ -58,10 +58,14 @@ const UserSchema = new mongoose.Schema({
           message: 'Password must be at least 6 characters',
         },
     },
-    createdAt: {
+    consultations:[{
+      "date": {
         type: Date,
         default: Date.now,
-    }
+      },
+      "photos": [],
+      "text": "text",
+    }],
 });
 
 UserSchema.pre('save', async function (next) {
@@ -90,7 +94,7 @@ UserSchema.methods.getSignedJwtToken = function () {
         expiresIn: process.env.JWT_EXPIRE,
     });
 };
-
+  
   // Сравнивает введенных пароль к хешем
 UserSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);

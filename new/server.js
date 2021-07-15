@@ -1,95 +1,27 @@
-const express = require('express')
-const bodyParser= require('body-parser')
-const app = express()
-const multer = require('multer');
-fs = require('fs-extra')
-app.use(bodyParser.urlencoded({extended: true}))
+const dotenv = require("dotenv");
+const express =  require("express");
+const morgan = require("morgan");
+const cors =  require("cors");
+const connectDB = require('./config/db.js');
 
-const MongoClient = require('mongodb').MongoClient
-ObjectId = require('mongodb').ObjectId
+dotenv.config({path: './config/config.env'})
+connectDB();
 
-const myurl = 'mongodb://localhost:27017';
+// connect router
+const users = require('./routes/users');
+const auth = require('./routes/auth');
 
+const app = express();
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-    cb(null, 'uploads')
-  },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
-  }
-})
+app.use(express.json());
 
-var upload = multer({ storage: storage })
+if (process.env.NODE_ENV == "developvent"){
+    app.use(morgan('dev'));
+}
+app.use(cors());
+app.use('/api/users', users);
+app.use('/api/auth', auth);
+// монтируем роутер
 
-MongoClient.connect(myurl, (err, client) => {
-    if (err) return console.log(err)
-    db = client.db('test') 
-    app.listen(3000, () => {
-        console.log('listening on 3000')
-  })
-})
-
-app.get('/',function(req,res){
-    res.sendFile(__dirname + '/index.html');
-
-});
-
-
-app.post('/uploadmultiple', upload.array('myFiles', 12), (req, res, next) => {
-    const files = req.files
-    if (!files) {
-    const error = new Error('Please choose files')
-    error.httpStatusCode = 400
-    return next(error)
-  }
-
-    res.send(files)
- 
-})
-
-
-app.post('/uploadphoto', upload.single('picture'), (req, res) => {
-    var img = fs.readFileSync(req.file.path);
-    var encode_image = img.toString('base64');
- // Define a JSONobject for the image attributes for saving to database
- 
-    var finalImg = {
-        contentType: req.file.mimetype,
-        image:  new Buffer(encode_image, 'base64')
-    };
-db.collection('mycollection').insertOne(finalImg, (err, result) => {
-  	console.log(result)
-
-    if (err) return console.log(err)
-
-    console.log('saved to database')
-    res.redirect('/')
-  
-    
-  })
-})
-
-
-app.get('/photos', (req, res) => {
-db.collection('mycollection').find().toArray((err, result) => {
-
-    const imgArray= result.map(element => element._id);
-		console.log(imgArray);
-
-    if (err) return console.log(err)
-    res.send(imgArray)
-  })
-});
-
-app.get('/photo/:id', (req, res) => {
-var filename = req.params.id;
-
-db.collection('mycollection').findOne({'_id': ObjectId(filename) }, (err, result) => {
-
-    if (err) return console.log(err)
-
-    res.contentType('image/jpeg');
-    res.send(result.image.buffer)
-  })
-})
+const PORT = process.env.PORT;
+const server = app.listen(PORT, console.log(`Server start on port ${PORT}`));
