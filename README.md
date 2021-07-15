@@ -16,6 +16,9 @@
 - `PUT//api/users/user/photo`; add a consultation to a user; doesnt work xd  
   
 #### Photos `(/api/photos)`
-- `POST//api/photos/upload_photo`; add a photo;  
+- `POST//api/photos/uploadPhoto`; add a photo;  
     send as BLOB using form or something like that;  
-    returns a JSON with either `"_id"` or `"error"`
+    returns a JSON with either `"id"` or `"error"`
+- `POST//api/photos/getPhoto`; get a photo;  
+    params: `id`  
+    returns a JSON with either `"data"` or `"error"`
