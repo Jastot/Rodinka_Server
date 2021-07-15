@@ -96,7 +96,7 @@ exports.putUser = async(req, res, next) => {
 // @decs    удаление пользователя 
 // @rout    DELITE //api/users/:id
 
-exports.deliteUser = async(req, res, next) => {
+exports.deleteUser = async(req, res, next) => {
     try {
         const deliteUser = await User.deleteOne({'_id': req.body['_id']});
         res.status(200).json({

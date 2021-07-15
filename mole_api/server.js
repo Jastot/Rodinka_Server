@@ -9,6 +9,8 @@ connectDB();
 
 // connect router
 const users = require('./routes/users');
+const auth = require('./routes/auth');
+
 const app = express();
 
 app.use(express.json());
@@ -18,6 +20,7 @@ if (process.env.NODE_ENV == "developvent"){
 }
 app.use(cors());
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 // монтируем роутер
 
 const PORT = process.env.PORT;
