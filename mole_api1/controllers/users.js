@@ -2,8 +2,26 @@ const connectDB = require('../config/db.js');
 const User = require('../models/User.js');
 const mongoose = require('mongoose');
 
+// @decs     получение людей по категориям [userType: client, admin, doctor]
+// @route    GET//api/users/people
+exports.getPeople = async(req, res, next) => {
+    try {
+        const clients = await User.find({'userType': req.body['userType']});
+        res.status(200).json({
+            success: true, 
+            data: clients,
+        });
+    }
+    catch (error) {
+        res.status(404).json({
+            success: false, 
+            error,
+        });
+    }
+};
+
 // @decs    получение всех пользователей 
-// @rout    GET//api/users
+// @route    GET//api/users
 exports.getUsers = async(req, res, next) => {
     try {
         const users = await User.find();
@@ -21,7 +39,7 @@ exports.getUsers = async(req, res, next) => {
 };
 
 // @decs    получение пользователя 
-// @rout    GET//api/users/:id
+// @route    GET//api/users/user
 exports.getUser = async(req, res, next) => {
     try {
         const user = await User.findOne({'_id': req.body['_id']});
@@ -38,28 +56,8 @@ exports.getUser = async(req, res, next) => {
     }
 };
 
-
-// @decs    получение людей по категориям [userType: client, admin, doctor]
-// @rout    GET//api/users/people
-exports.getPeople = async(req, res, next) => {
-    try {
-        const clients = await User.find({'userType': req.body['userType']});
-        res.status(200).json({
-            success: true, 
-            data: clients,
-        });
-    }
-    catch (error) {
-        res.status(404).json({
-            success: false, 
-            error,
-        });
-    }
-};
-
-
-// @decs    добавление пользователя 
-// @rout    POST//api/users/:id
+// @decs     добавление пользователя 
+// @route    POST//api/users/user
 exports.postUser = async(req, res, next) => {
     try {
         console.log(req.body);
@@ -78,7 +76,7 @@ exports.postUser = async(req, res, next) => {
 };
 
 // @decs    изменение пользователя 
-// @rout    PUT//api/users/:id
+// @route    PUT//api/users/user
 exports.putUser = async(req, res, next) => {
     try {
         const user = await User.updateOne({'_id': req.body['_id']}, req.body); //finfoneandupdate
@@ -95,8 +93,26 @@ exports.putUser = async(req, res, next) => {
     }
 };
 
+// @decs     удаление пользователя 
+// @route    DELETE //api/users/user
+exports.deleteUser = async(req, res, next) => {
+    try {
+        const deleteUser = await User.deleteOne({'_id': req.body['_id']});
+        res.status(200).json({
+            success: true, 
+            data: deleteUser,
+        });
+    }
+    catch (error) {
+        res.status(404).json({
+            success: false, 
+            error,
+        });
+    }
+};
+
 // @decs    добавление консультации пользователю 
-// @rout    PUT//api/users/id/photo
+// @route   PUT//api/users/user/photo
 exports.putConsultations = async(req, res, next) => {
     try {
         const user = await User.updateOne({'_id': req.body['_id']}, req.body); //finfoneandupdate
@@ -106,25 +122,6 @@ exports.putConsultations = async(req, res, next) => {
         });
     }
     catch (error){
-        res.status(404).json({
-            success: false, 
-            error,
-        });
-    }
-};
-
-// @decs    удаление пользователя 
-// @rout    DELITE //api/users/:id
-
-exports.deliteUser = async(req, res, next) => {
-    try {
-        const deliteUser = await User.deleteOne({'_id': req.body['_id']});
-        res.status(200).json({
-            success: true, 
-            data: deliteUser,
-        });
-    }
-    catch (error) {
         res.status(404).json({
             success: false, 
             error,

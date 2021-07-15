@@ -5,15 +5,15 @@ const {getUsers,
     getUser,
     postUser,
     putUser,
-    deliteUser,
+    deleteUser,
     getPeople} = require('../controllers/users.js');
 const router = express.Router();
 
 
 
-router.route('/').get(getUsers).post(postUser);
 router.route('/people').get(getPeople);
-router.route('/id').get(getUser).put(putUser).delete(deliteUser);
-// export route
+router.route('/user').get(getUser).post(postUser).put(putUser).delete(deleteUser);
+router.route('/').get(getUsers);
 
+// export router
 module.exports = router;

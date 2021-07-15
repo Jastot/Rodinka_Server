@@ -1,26 +1,29 @@
 const dotenv = require("dotenv");
-const express =  require("express");
+dotenv.config({path: './config/config.env'});
+
 const morgan = require("morgan");
 const cors =  require("cors");
-const connectDB = require('./config/db.js');
+const express =  require("express");
+const app = express();
 
-dotenv.config({path: './config/config.env'});
+
+
+// connect db
+const connectDB = require('./config/db.js');
 connectDB();
 
 // connect router
-const users = require('./routes/users');
-const app = express();
+const usersRouter = require('./routes/users');
 
+// use router
 app.use(express.json());
 
 if (process.env.NODE_ENV == "developvent"){
     app.use(morgan('dev'));
 }
 app.use(cors());
-app.use('/api/users', users);
+app.use('/api/users', usersRouter);
 
-
-// монтируем роутер
-
+// start server
 const PORT = process.env.PORT;
-const server = app.listen(PORT, console.log(`Server start on port ${PORT}`));
+app.listen(PORT, console.log(`Starting server on port ${PORT}`));

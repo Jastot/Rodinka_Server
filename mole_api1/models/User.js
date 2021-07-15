@@ -34,8 +34,10 @@ const UserSchema = new mongoose.Schema({
     },
     consultation: [
         {
-            'date': "",
-            'photos': [],
+            date: String,
+            diagnosis:String,
+            comments:String,
+            photos: [],
         }
     ],
 
