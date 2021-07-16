@@ -1,15 +1,23 @@
 const connectDB = require('../config/db.js');
 const Photo = require('../models/Photo.js');
+const User = require('../models/User.js');
+const Consultation = require('../models/Consultation.js');
 const mongoose = require('mongoose');
+
 
 exports.uploadPhoto = async (req, res, next) => {
     try{
         if (req.files || !Object.keys(req.files).length === 0){
             
-            var img = req.files[Object.keys(req.files)[0]].data;
+            var img = req.files['img'].data;
+            var consultationId = req.body.id;
             var encoded_image = img.toString('base64');
-            const photo = await Photo.create({"data": encoded_image});
-            delete photo["data"];
+
+            var photo = await Photo.create({"data": encoded_image});
+            var consultation = await C.updateOne(
+                {"_id":consultationId},
+                { $push:{"photos":photo.id}}
+            );           
             res.status(201).json({
                 success: true,
                 id: photo.id

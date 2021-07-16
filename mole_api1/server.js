@@ -16,6 +16,7 @@ connectDB();
 // connect router
 const usersRouter = require('./routers/users');
 const photoRouter = require('./routers/photo');
+const consultationsRouter = require('./routers/consultations');
 
 // use router
 app.use(express.json());
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV == "developvent"){
 app.use(cors());
 app.use('/api/users', usersRouter);
 app.use('/api/photos', photoRouter);
-
+app.use('/api/consultations', consultationsRouter);
 // start server
 const PORT = process.env.PORT;
 app.listen(PORT, console.log(`Starting server on port ${PORT}`));

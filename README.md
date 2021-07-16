@@ -17,8 +17,15 @@
   
 #### Photos `(/api/photos)`
 - `POST//api/photos/uploadPhoto`; add a photo;  
-    send as BLOB using form or something like that;  
-    returns a JSON with either `"id"` or `"error"`
+    send as BLOB using form or something like that;  body = form-data; 
+    params: `"img": BLOB img`, `"_id":consultation _id`
+    returns a JSON with either `"_id"` or `"error"`
 - `POST//api/photos/getPhoto`; get a photo;  
     params: `id`  
     returns a JSON with either `"data"` or `"error"`
+
+#### Consultations `(/api/consultations)`  
+- `POST//api/consultations/addConsultation`; create a new consultation and add it to a specified user;  
+    params: `"_id"` - userId  
+- `POST//api/consultations/removeConsultation`; removes a consultation from user's array and consultations collection;    
+    params: `"_id"` - userId, `"consultationId"` - consultationId 

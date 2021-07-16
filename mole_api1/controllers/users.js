@@ -42,7 +42,7 @@ exports.getUsers = async(req, res, next) => {
 // @route    GET//api/users/user
 exports.getUser = async(req, res, next) => {
     try {
-        const user = await User.findOne({'_id': req.body['_id']});
+        var user = await User.findOne({'_id': req.body['_id']});
         res.status(200).json({
             success: true, 
             data: user,

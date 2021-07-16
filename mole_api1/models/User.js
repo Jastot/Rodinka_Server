@@ -32,7 +32,15 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    consultations: [String]
+    consultations: [ new mongoose.Schema({
+        id: String,
+        date: Number
+    }, {_id:false})
+    ],
+    doctor: {
+        id: String
+    }
+
 });
 
 module.exports = mongoose.model('User', UserSchema);
