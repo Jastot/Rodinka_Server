@@ -1,7 +1,7 @@
 const { exception } = require('console');
 const http = require('http');
 
-function postCNN(buffer, callback){
+function reqCNN(buffer, callback){
     let data = JSON.stringify({
         "image": buffer
     });
@@ -37,8 +37,8 @@ function postCNN(buffer, callback){
 
 // Example:
 // let buffer = fs.readFileSync('./data/_data/test/malignant/1267_1.jpg');
-// postCNN(buffer, data=>console.log(data));
+// reqCNN(buffer, data=>console.log(data));
 
-exports.postCNN = postCNN;
+exports.reqCNN = reqCNN;
 
 //aulit 14.07.21

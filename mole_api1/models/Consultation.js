@@ -11,10 +11,9 @@ const ConsultationSchema = mongoose.Schema({
         default: Math.floor(Date.now()/1000)
     },
     photos: [
-        {
+        new mongoose.Schema({
             id: String,
-            number: Number
-        }
+        }, {_id:false})
     ],
     complaints: String,
     examination: String,

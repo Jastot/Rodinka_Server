@@ -28,7 +28,7 @@ exports.login = async (req, res, next) => {
     if (!user) {
       res.status(401).json({
         success: false,
-        error: 'Email или пароль не верныs',
+        error: 'Email или пароль не верны',
       });
       return;
     }

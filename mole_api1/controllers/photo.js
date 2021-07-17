@@ -7,23 +7,23 @@ const mongoose = require('mongoose');
 
 exports.uploadPhoto = async (req, res, next) => {
     try{
-        if (req.files || !Object.keys(req.files).length === 0){
+        if (req.files || !Object.keys(req.files).length === 0 && req.body.id && re){
             
             var img = req.files['img'].data;
-            var consultationId = req.body.id;
+            var consultationId = req.body['_id'];
             var encoded_image = img.toString('base64');
 
             var photo = await Photo.create({"data": encoded_image});
-            var consultation = await C.updateOne(
+            var consultation = await Consultation.updateOne(
                 {"_id":consultationId},
-                { $push:{"photos":photo.id}}
+                { $push:{"photos":{"id":photo['_id']}}}
             );           
             res.status(201).json({
                 success: true,
                 id: photo.id
             })
         } else {
-            res.status(400).json({"error":"attached file doesn't exist. no photo attached?"})
+            res.status(400).json({"error":"no attached files exist. no photo attached?"})
         }
 
     } catch(err) {
