@@ -62,6 +62,12 @@ const UserSchema = new mongoose.Schema({
         date: Number
     }, {_id:false})
     ],
+    operations: [ new mongoose.Schema({
+        id: String,
+        date: Number,
+        descriptionTLDR: String
+    }, {_id:false})
+    ],
     doctor: {
         id: String
     },

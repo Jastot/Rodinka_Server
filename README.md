@@ -24,6 +24,7 @@
     returns a JSON with either `"data"` or `"error"`
 
 #### Consultations `(/api/consultations)`  
+    ConsultationSchema editable parameters: `"examination" (String), "complaints" (String), "plans" (String), "recommendations" (String), "diagnosis" (String), ?"date" (String, UNIX timestamp)`  
 - `POST//api/consultations/addConsultation`; create a new consultation and add it to a specified user;  
     params: `"_id"` - userId  
 - `POST//api/consultations/updateConsultation`; get a consultation by id;      
@@ -32,3 +33,25 @@
     params: `"_id"` - consultationId and others which you'd like to modify   
 - `POST//api/consultations/removeConsultation`; removes a consultation from user's array and consultations collection;  
     params: `"_id"` - consultationId  
+
+#### Operations `(/api/operations)`  
+    OperationSchema editable parameters: `"descriptionTLDR" (String), "description" (String), "diagnosis" (String), "recommendations" (String), ?"date" (String, UNIX timestamp)`  
+- `POST//api/operations/addOperation`; create a new operation and add it to a specified user;  
+    params: `"_id"` - userId  
+- `POST//api/operations/updateOperation`; get an operation by id;      
+    params: `"_id"` - operationId  
+- `POST//api/operations/updateOperation`; update an operation;  
+    params: `"_id"` - operationId and others which you'd like to modify   
+- `POST//api/operations/removeOperation`; removes an operation from user's array and operations collection;  
+    params: `"_id"` - operationId  
+
+#### Analyzes `(/api/analyzes)`  
+    AnalysisSchema editable parameters: `"type" (String), "description" (String), "conclusion" (String), "attachments" (Array, feature to add pics and so on?), ?"date" (String, UNIX timestamp)`  
+- `POST//api/operations/addAnalysis`; create a new analysis and add it to a specified user;  
+    params: `"_id"` - userId  
+- `POST//api/operations/updateAnalysis`; get an analysis by id;      
+    params: `"_id"` - analysisId  
+- `POST//api/operations/updateAnalysis`; update an analysis;  
+    params: `"_id"` - analysisId and others which you'd like to modify   
+- `POST//api/operations/removeAnalysis`; removes an analysis from user's array and analyzes collection;  
+    params: `"_id"` - analysisId  

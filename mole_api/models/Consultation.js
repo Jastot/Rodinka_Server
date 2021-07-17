@@ -18,7 +18,7 @@ const ConsultationSchema = mongoose.Schema({
     parent: String,
     complaints: String,
     examination: String,
-    planned: String,
+    plans: String,
     recommendations: String,
     diagnosis: String
 })
