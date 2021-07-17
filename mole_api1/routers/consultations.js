@@ -1,13 +1,14 @@
 // router with express connection
 const express = require('express');
 const {
-   addConsultation, removeConsultation, updateConsultation
+   addConsultation, removeConsultation, updateConsultation, getConsultation
     } = require('../controllers/consultations.js');
 const router = express.Router();
 
 // routes
 router.route('/addConsultation').post(addConsultation);
 router.route('/updateConsultation').post(updateConsultation);
+router.route('/getConsultation').post(getConsultation);
 router.route('/removeConsultation').post(removeConsultation);
 
 // no entry route

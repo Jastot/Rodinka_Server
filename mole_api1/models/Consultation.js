@@ -1,4 +1,3 @@
-const { kStringMaxLength } = require('buffer');
 const mongoose = require('mongoose');
 const internal = require('stream');
 const ConsultationSchema = mongoose.Schema({
@@ -13,8 +12,10 @@ const ConsultationSchema = mongoose.Schema({
     photos: [
         new mongoose.Schema({
             id: String,
+            minimapNum: Number
         }, {_id:false})
     ],
+    parent: String,
     complaints: String,
     examination: String,
     planned: String,

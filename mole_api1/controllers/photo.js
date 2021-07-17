@@ -36,8 +36,8 @@ exports.uploadPhoto = async (req, res, next) => {
 
 exports.getPhoto = async (req, res, next) => {
     try {
-        if (req.body.id){
-            let id = req.body.id;
+        if (req.body['_id']){
+            let id = req.body['_id'];
             let photo = await Photo.findOne({"_id":id});
             res.status(200).json({"data":photo.data});
         } else {

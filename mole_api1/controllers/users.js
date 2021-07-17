@@ -6,11 +6,16 @@ const mongoose = require('mongoose');
 // @route    GET//api/users/people
 exports.getPeople = async(req, res, next) => {
     try {
-        const clients = await User.find({'userType': req.body['userType']});
-        res.status(200).json({
-            success: true, 
-            data: clients,
-        });
+        if (req.body['userType']){
+            const clients = await User.find({'userType': req.body['userType']});
+            res.status(200).json({
+                success: true, 
+                data: clients,
+            });
+        } else {
+            throw 'No userType specified';
+        }
+
     }
     catch (error) {
         res.status(404).json({
