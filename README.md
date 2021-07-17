@@ -8,7 +8,7 @@
 - `GET//api/users/user/`; get user by id;  
     params: `"_id"`
 - `POST//api/users/user`; creates new user;  
-    params: `"surname", "name", ?"additional_name", "dateOfBirth"(YYYY-mm-dd), "userType" ("client"/"doctor"/"admin")`  
+    params: `"surname", "name", ?"additional_name", "dateOfBirth"(YYYY-mm-dd), "?userType" ("client"/"doctor"/"admin")`  
 - `DELETE//api/users/user`; deletes a user;  
     params: `"_id"`  
 - `PUT//api/users/user`; modifies a user;  
