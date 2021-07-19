@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const perms = require('../config/permissions.json');
 
 /**
  * @desc    Login
@@ -88,6 +89,51 @@ exports.getMe = async (req, res, next) => {
 
     res.status(200).json({ success: true, data: req.user });
 };
+
+// permissions check middleware
+exports.checkPerms = async (req, res, next)=>{
+    try {
+        var token;
+        var type;
+        if (
+            req.headers.authorization &&
+            req.headers.authorization.startsWith('Bearer')
+        ) {
+            token = req.headers.authorization.split(' ')[1];
+        } else if (req.body['token']){
+            token = req.body['token'];
+        } else {
+            token = "";
+        }
+
+        if (token==""){
+            type = "guest";
+            // res.status(403).json({
+            //     "success":false,
+            //     "error":"access token is not specified"
+            // });
+            // return;
+        } else {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            type=decoded.type;
+        }
+
+        if(perms[req.path][req.method].includes(type)){
+            next();
+        } else {
+            res.status(403).json({
+                "success":false,
+                "error":"forbidden, not enough permissions"
+            })
+        }  
+        
+    } catch (err){
+        res.status(400).json({
+            "success":false,
+            "error":err.toString()
+        })
+    }
+}
 
 // Получаем JWT из модели и отправляем в ответ на запрос
 const sendTokenResponse = (user, statusCode, res) => {

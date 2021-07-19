@@ -38,7 +38,7 @@
     OperationSchema editable parameters: `"descriptionTLDR" (String), "description" (String), "diagnosis" (String), "recommendations" (String), ?"date" (String, UNIX timestamp)`  
 - `POST//api/operations/addOperation`; create a new operation and add it to a specified user;  
     params: `"_id"` - userId  
-- `POST//api/operations/updateOperation`; get an operation by id;      
+- `POST//api/operations/getOperation`; get an operation by id;      
     params: `"_id"` - operationId  
 - `POST//api/operations/updateOperation`; update an operation;  
     params: `"_id"` - operationId and others which you'd like to modify   
@@ -49,7 +49,7 @@
     AnalysisSchema editable parameters: `"type" (String), "description" (String), "conclusion" (String), "attachments" (Array, feature to add pics and so on?), ?"date" (String, UNIX timestamp)`  
 - `POST//api/operations/addAnalysis`; create a new analysis and add it to a specified user;  
     params: `"_id"` - userId  
-- `POST//api/operations/updateAnalysis`; get an analysis by id;      
+- `POST//api/operations/getAnalysis`; get an analysis by id;      
     params: `"_id"` - analysisId  
 - `POST//api/operations/updateAnalysis`; update an analysis;  
     params: `"_id"` - analysisId and others which you'd like to modify   
