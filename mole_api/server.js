@@ -17,6 +17,12 @@ const connectDB = require('./config/db.js');
 connectDB();
 
 // middleware
+app.use((req,res,next)=>{
+    if (/.+\/$/.test(req.path)){
+        req.url=req.url.slice(0, -1);
+    }
+    next();
+})
 app.use(express.json());
 app.use(fileUpload());
 app.use(cors());
