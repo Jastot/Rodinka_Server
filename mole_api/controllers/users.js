@@ -65,10 +65,10 @@ exports.getUser = async(req, res, next) => {
 // @route    POST//api/users/user
 exports.postUser = async(req, res, next) => {
     try {
-        let userUnwrap = ({_id, name, surname, additional_name, dateOfBirth, userType, email, password}) => ({_id, name, surname, additional_name, dateOfBirth, userType, email, password});
+        let userUnwrap = ({_id, name, surname, additional_name, dateOfBirth, userType, email, password}) => ({_id, name, surname, additional_name, dateOfBirth, userType, "email":email.toLowerCase(), password});
         console.log(req.body);
-        const entryTest = await User.findOne({"email":req.email});
-        if (entryTest != null){
+        const entryTest = await User.findOne({"email":req.body.email.toLowerCase()});
+        if (!entryTest){
             const user = await User.create(userUnwrap(req.body));
             res.status(201).json({
                 success: true, 
@@ -94,7 +94,7 @@ exports.postUser = async(req, res, next) => {
 // @route    PUT//api/users/user
 exports.putUser = async(req, res, next) => {
     try {
-        let userUnwrap = ({_id, name, surname, additional_name, dateOfBirth, userType, email, password}) => ({_id, name, surname, additional_name, dateOfBirth, userType, email, password});
+        let userUnwrap = ({_id, name, surname, additional_name, dateOfBirth, userType, email, password}) => ({_id, name, surname, additional_name, dateOfBirth, userType, "email":email.toLowerCase(), password});
         const user = await User.updateOne({'_id': req.body['_id']}, userUnwrap(req.body)); //finfoneandupdate
         res.status(200).json({
             success: true, 

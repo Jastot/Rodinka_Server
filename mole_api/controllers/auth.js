@@ -91,12 +91,12 @@ exports.checkPerms = async (req, res, next)=>{
     try {
         var token;
         var type;
-        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        if (false){
             token = req.headers.authorization.split(' ')[1];
         } else {
             token = req.body['token'] || req.query['token'] || "";
         }
-        if (token==""){
+        if (token.length<1){
             type = "guest";
             // res.status(403).json({
             //     "success":false,
