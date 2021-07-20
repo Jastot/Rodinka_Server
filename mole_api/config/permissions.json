@@ -87,6 +87,31 @@
         "DELETE":[]
     },
 
+    "/api/diagnoses/addDiagnosis":{
+        "GET":[],
+        "POST":["doctor","admin"],
+        "PUT":[],
+        "DELETE":[]
+    },
+    "/api/diagnoses/updateDiagnosis":{
+        "GET":[],
+        "POST":["doctor","admin"],
+        "PUT":[],
+        "DELETE":[]
+    },
+    "/api/diagnoses/getDiagnosis":{
+        "GET":[],
+        "POST":["doctor","admin"],
+        "PUT":[],
+        "DELETE":[]
+    },
+    "/api/diagnoses/removeDiagnosis":{
+        "GET":[],
+        "POST":["admin"],
+        "PUT":[],
+        "DELETE":[]
+    },
+
     "/api/photos/uploadPhoto":{
         "GET":[],
         "POST":["doctor","admin"],
@@ -116,6 +141,6 @@
         "GET":["doctor","admin"],
         "POST":["doctor","admin","guest"],
         "DELETE":["admin"],
-        "PUT":["doctor","admin"]
+        "PUT":["admin"]
     }
 }

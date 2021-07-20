@@ -68,6 +68,16 @@ const UserSchema = new mongoose.Schema({
         descriptionTLDR: String
     }, {_id:false})
     ],
+    analyzes: [ new mongoose.Schema({
+        id: String,
+        date: Number
+    }, {_id: false})
+    ],
+    diagnoses: [ new mongoose.Schema({
+        id: String,
+        date: Number,
+        descriptionTLDR: String
+    }, {_id: false})],
     doctor: {
         id: String
     },

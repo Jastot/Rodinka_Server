@@ -1,19 +1,19 @@
 const connectDB = require('../config/db.js');
 const Photo = require('../models/Photo.js');
 const User = require('../models/User.js');
-const Operation = require('../models/Operation.js');
+const Diagnosis = require('../models/Diagnosis.js');
 const mongoose = require('mongoose');
 
-exports.addOperation = async (req,res,next)=>{
+exports.addDiagnosis = async (req,res,next)=>{
     try {
         let unwrap = ({_id, date, type, description, conclusion}) => ({"parent":_id, date, type, description, conclusion});
         var id = req.body['_id'];
-        var operation = await Operation.create(unwrap(req.body));
-        await User.updateOne({'_id':id}, {$push:{'operations':{"id":operation['_id'], "date":operation['date']}}});
+        var diagnosis = await Diagnosis.create(unwrap(req.body));
+        await User.updateOne({'_id':id}, {$push:{'diagnoses':{"id":diagnosis['_id'], "date":diagnosis['date']}}});
         res.status(200).json({
             "success": true,
-            "operationId":operation['_id'],
-            "timestamp":operation['date']
+            "diagnosisId":diagnosis['_id'],
+            "timestamp":diagnosis['date']
         });
 
     } catch (err){
@@ -23,21 +23,19 @@ exports.addOperation = async (req,res,next)=>{
         })
     }
 }
-exports.updateOperation = async (req,res,next)=>{
+exports.updateDiagnosis = async (req,res,next)=>{
     try {
         let unwrap = ({date, type, description, conclusion}) => ({date, type, description, conclusion});
         var id = req.body['_id'];
-        var body = req.body;
-        delete body['_id'];
-        var operation = await Operation.updateOne({'_id':id}, unwrap(req.body));
+        var diagnosis = await Diagnosis.updateOne({'_id':id}, unwrap(req.body));
         if (req.body['descriptionTLDR']){
             console.log('in')
-            var parentId = await Operation.findOne({'_id':id}, {"parent":1});
-            await User.updateOne({'_id':parentId.parent, 'operations.id':id}, {"$set": {"operations.$.descriptionTLDR":req.body['descriptionTLDR']}});
+            var parentId = await Diagnosis.findOne({'_id':id}, {"parent":1});
+            await User.updateOne({'_id':parentId.parent, 'diagnoses.id':id}, {"$set": {"diagnoses.$.descriptionTLDR":req.body['descriptionTLDR']}});
         }
         res.status(200).json({
             "success": true,
-            "operation":operation
+            "diagnosis":diagnosis
         });
 
     } catch (err){
@@ -47,13 +45,13 @@ exports.updateOperation = async (req,res,next)=>{
         })
     }
 }
-exports.getOperation = async (req,res,next)=>{
+exports.getDiagnosis = async (req,res,next)=>{
     try{
         var id = req.body['_id'];
-        var operation = await Operation.findOne({'_id':id});
+        var diagnosis = await Diagnosis.findOne({'_id':id});
         res.status(200).json({
             "success":true,
-            "operation":operation
+            "diagnosis":diagnosis
         })
     } catch (err){
         res.status(400).json({
@@ -62,12 +60,12 @@ exports.getOperation = async (req,res,next)=>{
         })
     }
 }
-exports.removeOperation = async (req,res,next)=>{
+exports.removeDiagnosis = async (req,res,next)=>{
     try {
-        var operationId = req.body['_id'];
-        var operation = await Operation.findOne({"_id":operationId}, {"parent":1});
-        await Operation.deleteOne({"_id":operationId});
-        var user = await User.updateOne({"_id":operation.parent}, {$pull:{"operations":{"id":operationId}}});
+        var diagnosisId = req.body['_id'];
+        var diagnosis = await Operation.findOne({"_id":diagnosisId}, {"parent":1});
+        await Diagnosis.deleteOne({"_id":diagnosisId});
+        var user = await User.updateOne({"_id":diagnosis.parent}, {$pull:{"operations":{"id":diagnosisId}}});
         res.status(200).json({
             "success": true,
         });

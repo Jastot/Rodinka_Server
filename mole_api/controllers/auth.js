@@ -66,14 +66,10 @@ exports.login = async (req, res, next) => {
 exports.getMe = async (req, res, next) => {
     // Проверка токена и получение пользователя по токену...дальше можно проверить права доступа
     let token;
-
-    if (
-        req.headers.authorization &&
-        req.headers.authorization.startsWith('Bearer')
-    ) {
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1];
     } else {
-        token = req.body['token'];
+        token = req.body['token'] || req.query['token'] || "";
     }
     
     try {
@@ -95,17 +91,11 @@ exports.checkPerms = async (req, res, next)=>{
     try {
         var token;
         var type;
-        if (
-            req.headers.authorization &&
-            req.headers.authorization.startsWith('Bearer')
-        ) {
+        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
             token = req.headers.authorization.split(' ')[1];
-        } else if (req.body['token']){
-            token = req.body['token'];
         } else {
-            token = "";
+            token = req.body['token'] || req.query['token'] || "";
         }
-
         if (token==""){
             type = "guest";
             // res.status(403).json({
@@ -138,6 +128,5 @@ exports.checkPerms = async (req, res, next)=>{
 // Получаем JWT из модели и отправляем в ответ на запрос
 const sendTokenResponse = (user, statusCode, res) => {
     const token = user.getSignedJwtToken();
-
     res.status(statusCode).json({ success: true, token: token});
 };

@@ -55,3 +55,14 @@
     params: `"_id"` - analysisId and others which you'd like to modify   
 - `POST//api/operations/removeAnalysis`; removes an analysis from user's array and analyzes collection;  
     params: `"_id"` - analysisId  
+
+#### Diagnoses `(/api/diagnoses)`
+    DiagnosisSchema editable parameters: `"diagnosis" (String), "diagnosisTLDR" (String), "TNMStage" (String), "analyzes" - id array (?)`
+- `POST//api/diagnoses/addDiagnosis`; create a new diagnosis and add it to a specified user;  
+    params: `"_id"` - userId  
+- `POST//api/diagnoses/getDiagnosis`; get a diagnosis by id;      
+    params: `"_id"` - diagnosisId  
+- `POST//api/diagnoses/updateDiagnosis`; update a diagnosis;  
+    params: `"_id"` - diagnosisId and others which you'd like to modify   
+- `POST//api/diagnoses/removeDiagnosis`; removes a diagnosis from user's array and diagnoses collection;  
+    params: `"_id"` - diagnosisId  

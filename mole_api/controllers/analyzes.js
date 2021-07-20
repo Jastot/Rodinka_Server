@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 
 exports.addAnalysis = async (req,res,next)=>{
     try {
+        let unwrap = ({_id, date, type, description, conclusion}) => ({"parent":_id, date, type, description, conclusion});
         var id = req.body['_id'];
-        var analysis = await Analysis.create({"parent":id});
+        var analysis = await Analysis.create(unwrap(req.body));
         await User.updateOne({'_id':id}, {$push:{'analyzes':{"id":analysis['_id'], "date":analysis['date']}}});
         res.status(200).json({
             "success": true,
@@ -23,10 +24,9 @@ exports.addAnalysis = async (req,res,next)=>{
 }
 exports.updateAnalysis = async (req,res,next)=>{
     try {
+        let unwrap = ({date, type, description, conclusion}) => ({date, type, description, conclusion});
         var id = req.body['_id'];
-        var body = req.body;
-        delete body['_id'];
-        var analysis = await Analysis.updateOne({'_id':id}, body);
+        var analysis = await Analysis.updateOne({'_id':id}, unwrap(body));
         res.status(200).json({
             "success": true,
             "analysis":analysis
