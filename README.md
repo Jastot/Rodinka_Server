@@ -1,6 +1,7 @@
 # Rodinka_Server
 
 ### API
+**IMPORTANT NOTE: every request must have an access token specified.**
 #### Users `(/api/users)`
 - `GET//api/users/`;  gets all users
 - `GET//api/users/people/`; gets all users of certain type;  
@@ -47,13 +48,13 @@
 
 #### Analyzes `(/api/analyzes)`  
     AnalysisSchema editable parameters: `"type" (String), "description" (String), "conclusion" (String), "attachments" (Array, feature to add pics and so on?), ?"date" (String, UNIX timestamp)`  
-- `POST//api/operations/addAnalysis`; create a new analysis and add it to a specified user;  
+- `POST//api/analyzes/addAnalysis`; create a new analysis and add it to a specified user;  
     params: `"_id"` - userId  
-- `POST//api/operations/getAnalysis`; get an analysis by id;      
+- `POST//api/analyzes/getAnalysis`; get an analysis by id;      
     params: `"_id"` - analysisId  
-- `POST//api/operations/updateAnalysis`; update an analysis;  
+- `POST//api/analyzes/updateAnalysis`; update an analysis;  
     params: `"_id"` - analysisId and others which you'd like to modify   
-- `POST//api/operations/removeAnalysis`; removes an analysis from user's array and analyzes collection;  
+- `POST//api/analyzes/removeAnalysis`; removes an analysis from user's array and analyzes collection;  
     params: `"_id"` - analysisId  
 
 #### Diagnoses `(/api/diagnoses)`
