@@ -2,7 +2,8 @@
 const express = require('express');
 const {
     uploadPhoto,
-    getPhoto
+    getPhoto,
+    requestCNN
     } = require('../controllers/photo.js');
 const router = express.Router();
 
@@ -10,6 +11,7 @@ const router = express.Router();
 // routes
 router.route('/uploadPhoto').post(uploadPhoto);
 router.route('/getPhoto').post(getPhoto);
+router.route('/requestCNN').post(requestCNN);
 
 // no entry route
 router.use('/', (req,res)=>{

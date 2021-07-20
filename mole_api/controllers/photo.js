@@ -2,6 +2,7 @@ const connectDB = require('../config/db.js');
 const Photo = require('../models/Photo.js');
 const User = require('../models/User.js');
 const Consultation = require('../models/Consultation.js');
+const { reqCNN } = require('../cnn-req.js');
 const mongoose = require('mongoose');
 
 
@@ -47,6 +48,24 @@ exports.getPhoto = async (req, res, next) => {
     } catch(err){
         res.status(500).json({
             "success": false, 
+            "error": err.toString()
+        })
+    }
+}
+
+exports.requestCNN = async (req, res, next) => {
+    try {
+        if (req.body['_id']){
+            let photo = await Photo.findOne({"_id":req.body['_id']});
+            let cnnResponse = reqCNN(photo.data, (data)=>{
+                res.status(200).json(data);
+            })
+        } else {
+            res.status(400).json({"error":"no field named id"});
+        }
+    } catch (err){
+        res.status(400).json({
+            "success":false,
             "error": err.toString()
         })
     }

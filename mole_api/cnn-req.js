@@ -25,6 +25,7 @@ function reqCNN(buffer, callback){
             chunks+=chunk;
         });
         res.on('end', ()=>{
+            chunks = JSON.parse(chunks);
             callback(chunks);
         });
     });

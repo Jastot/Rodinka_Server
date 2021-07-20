@@ -124,6 +124,12 @@
         "PUT":[],
         "DELETE":[]
     },
+    "/api/photos/requestCNN":{
+        "GET":[],
+        "POST":["doctor","admin"],
+        "PUT":[],
+        "DELETE":[]       
+    },
 
     "/api/users":{
         "GET":["admin"],
