@@ -1,6 +1,6 @@
 const connectDB = require('../config/db.js');
 const User = require('../models/User.js');
-const Analysis = require('../models/analysis.js');
+const Analysis = require('../models/Analysis.js');
 const mongoose = require('mongoose');
 
 exports.addAnalysis = async (req,res,next)=>{
