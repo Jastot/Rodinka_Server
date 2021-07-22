@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 exports.addDiagnosis = async (req,res,next)=>{
     try {
-        let unwrap = ({_id, date, type, description, conclusion}) => ({"parent":_id, date, type, description, conclusion});
+        let unwrap = ({_id, date, diagnosis, diagnosisTLDR, TNMStage}) => ({"parent":_id, date, diagnosis, diagnosisTLDR, TNMStage});
         var id = req.body['_id'];
         var diagnosis = await Diagnosis.create(unwrap(req.body));
         await User.updateOne({'_id':id}, {$push:{'diagnoses':{"id":diagnosis['_id'], "date":diagnosis['date']}}});
@@ -25,7 +25,7 @@ exports.addDiagnosis = async (req,res,next)=>{
 }
 exports.updateDiagnosis = async (req,res,next)=>{
     try {
-        let unwrap = ({date, type, description, conclusion}) => ({date, type, description, conclusion});
+        let unwrap = ({_id, date, diagnosis, diagnosisTLDR, TNMStage}) => ({"parent":_id, date, diagnosis, diagnosisTLDR, TNMStage});
         var id = req.body['_id'];
         var diagnosis = await Diagnosis.updateOne({'_id':id}, unwrap(req.body));
         if (req.body['descriptionTLDR']){
