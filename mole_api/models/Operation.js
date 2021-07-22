@@ -7,7 +7,7 @@ const OperationSchema = mongoose.Schema({
     },
     date: {
         type: Number,
-        default: Math.floor(Date.now()/1000)
+        default: Date.now
     },
     parent: String,
     descriptionTLDR: String,

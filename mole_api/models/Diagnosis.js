@@ -3,11 +3,11 @@ const internal = require('stream');
 const DiagnosisSchema = mongoose.Schema({
     createdAt: {
         type: Date,
-        default: Date.now()
+        default: Date()
     },
     date: {
         type: Number,
-        default: Math.floor(Date.now()/1000)
+        default: Date.now
     },
     parent: String,
     diagnosis: String,

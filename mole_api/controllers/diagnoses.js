@@ -11,8 +11,13 @@ const unwrap = (obj)=>(remove(unwrap1_professional_naming_vArIaBlE_BeSt2007IloVE
 exports.addDiagnosis = async (req,res,next)=>{
     try {
         var id = req.body['_id'];
-        var diagnosis = await Diagnosis.create(unwrap(req.body));
-        await User.updateOne({'_id':id}, {$push:{'diagnoses':{"id":diagnosis['_id'], "date":diagnosis['date']}}});
+        var unwrapped = unwrap(req.body);
+        var diagnosis = await Diagnosis.create(unwrapped);
+        if (unwrapped.diagnosisTLDR){
+            await User.updateOne({'_id':id}, {$push:{'diagnoses':{"id":diagnosis['_id'], "date":diagnosis['date'], "diagnosisTLDR":unwrapped.diagnosisTLDR}}});
+        } else {
+            await User.updateOne({'_id':id}, {$push:{'diagnoses':{"id":diagnosis['_id'], "date":diagnosis['date']}}});
+        }
         res.status(200).json({
             "success": true,
             "diagnosisId":diagnosis['_id'],
@@ -29,11 +34,11 @@ exports.addDiagnosis = async (req,res,next)=>{
 exports.updateDiagnosis = async (req,res,next)=>{
     try {
         var id = req.body['_id'];
-        var diagnosis = await Diagnosis.updateOne({'_id':id}, unwrap(req.body));
-        if (req.body['descriptionTLDR']){
-            console.log('in')
+        var unwrapped = unwrap(req.body);
+        var diagnosis = await Diagnosis.updateOne({'_id':id}, unwrapped);
+        if (unwrapped['diagnosisTLDR']){
             var parentId = await Diagnosis.findOne({'_id':id}, {"parent":1});
-            await User.updateOne({'_id':parentId.parent, 'diagnoses.id':id}, {"$set": {"diagnoses.$.descriptionTLDR":req.body['descriptionTLDR']}});
+            await User.updateOne({'_id':parentId.parent, 'diagnoses.id':id}, {"$set": {"diagnoses.$.diagnosisTLDR":unwrapped.diagnosisTLDR}});
         }
         res.status(200).json({
             "success": true,

@@ -76,7 +76,7 @@ const UserSchema = new mongoose.Schema({
     diagnoses: [ new mongoose.Schema({
         id: String,
         date: Number,
-        descriptionTLDR: String
+        diagnosisTLDR: String
     }, {_id: false})],
     doctor: {
         id: String

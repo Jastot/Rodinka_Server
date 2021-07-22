@@ -11,8 +11,13 @@ const unwrap = (obj)=>(remove(unwrap1_professional_naming_vArIaBlE_BeSt2007IloVE
 exports.addOperation = async (req,res,next)=>{
     try {
         var id = req.body['_id'];
-        var operation = await Operation.create(unwrap(req.body));
-        await User.updateOne({'_id':id}, {$push:{'operations':{"id":operation['_id'], "date":operation['date']}}});
+        var unwrapped = unwrap(req.body);
+        var operation = await Operation.create(unwrapped);
+        if (unwrapped['descriptionTLDR']){
+            await User.updateOne({'_id':id}, {$push:{'operations':{"id":operation['_id'], "date":operation['date']}}});
+        } else {
+            await User.updateOne({'_id':id}, {$push:{'operations':{"id":operation['_id'], "date":operation['date'], "descriptionTLDR":unwrapped.descriptionTLDR}}});
+        }
         res.status(200).json({
             "success": true,
             "operationId":operation['_id'],

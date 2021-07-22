@@ -7,7 +7,7 @@ const ConsultationSchema = mongoose.Schema({
     },
     date: {
         type: Number,
-        default: Math.floor(Date.now()/1000)
+        default: Date.now
     },
     photos: [
         new mongoose.Schema({
