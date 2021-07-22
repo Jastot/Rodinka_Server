@@ -3,9 +3,12 @@ const User = require('../models/User.js');
 const Analysis = require('../models/Analysis.js');
 const mongoose = require('mongoose');
 
+const remove = (obj)=>{Object.keys(obj).forEach(key => obj[key]?{}:delete obj[key]); return obj};
+const unwrap1_professional_naming_vArIaBlE_BeSt2007IloVEMORGENSHTERN = ({_id, date, type, description, conclusion}) => ({"parent":_id, date, type, description, conclusion});
+const unwrap = (obj)=>(remove(unwrap1_professional_naming_vArIaBlE_BeSt2007IloVEMORGENSHTERN(obj)));
+
 exports.addAnalysis = async (req,res,next)=>{
     try {
-        let unwrap = ({_id, date, type, description, conclusion}) => ({"parent":_id, date, type, description, conclusion});
         var id = req.body['_id'];
         var analysis = await Analysis.create(unwrap(req.body));
         await User.updateOne({'_id':id}, {$push:{'analyzes':{"id":analysis['_id'], "date":analysis['date']}}});
@@ -24,7 +27,6 @@ exports.addAnalysis = async (req,res,next)=>{
 }
 exports.updateAnalysis = async (req,res,next)=>{
     try {
-        let unwrap = ({date, type, description, conclusion}) => ({date, type, description, conclusion});
         var id = req.body['_id'];
         var analysis = await Analysis.updateOne({'_id':id}, unwrap(body));
         res.status(200).json({

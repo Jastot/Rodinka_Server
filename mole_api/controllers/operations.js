@@ -4,9 +4,12 @@ const User = require('../models/User.js');
 const Operation = require('../models/Operation.js');
 const mongoose = require('mongoose');
 
+const remove = (obj)=>{Object.keys(obj).forEach(key => obj[key]?{}:delete obj[key]); return obj};
+const unwrap1_professional_naming_vArIaBlE_BeSt2007IloVEMORGENSHTERN = ({_id, date, description, descriptionTLDR, diagnosis, recommendations}) => ({"parent":_id, date, description, descriptionTLDR, diagnosis, recommendations});
+const unwrap = (obj)=>(remove(unwrap1_professional_naming_vArIaBlE_BeSt2007IloVEMORGENSHTERN(obj)));
+
 exports.addOperation = async (req,res,next)=>{
     try {
-        let unwrap = ({_id, date, type, description, conclusion}) => ({"parent":_id, date, type, description, conclusion});
         var id = req.body['_id'];
         var operation = await Operation.create(unwrap(req.body));
         await User.updateOne({'_id':id}, {$push:{'operations':{"id":operation['_id'], "date":operation['date']}}});
@@ -25,7 +28,6 @@ exports.addOperation = async (req,res,next)=>{
 }
 exports.updateOperation = async (req,res,next)=>{
     try {
-        let unwrap = ({date, type, description, conclusion}) => ({date, type, description, conclusion});
         var id = req.body['_id'];
         var body = req.body;
         delete body['_id'];

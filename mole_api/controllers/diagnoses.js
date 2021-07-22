@@ -4,9 +4,12 @@ const User = require('../models/User.js');
 const Diagnosis = require('../models/Diagnosis.js');
 const mongoose = require('mongoose');
 
+const remove = (obj)=>{Object.keys(obj).forEach(key => obj[key]?{}:delete obj[key]); return obj};
+const unwrap1_professional_naming_vArIaBlE_BeSt2007IloVEMORGENSHTERN = ({_id, date, diagnosis, diagnosisTLDR, TNMStage}) => ({"parent":_id, date, diagnosis, diagnosisTLDR, TNMStage});
+const unwrap = (obj)=>(remove(unwrap1_professional_naming_vArIaBlE_BeSt2007IloVEMORGENSHTERN(obj)));
+
 exports.addDiagnosis = async (req,res,next)=>{
     try {
-        let unwrap = ({_id, date, diagnosis, diagnosisTLDR, TNMStage}) => ({"parent":_id, date, diagnosis, diagnosisTLDR, TNMStage});
         var id = req.body['_id'];
         var diagnosis = await Diagnosis.create(unwrap(req.body));
         await User.updateOne({'_id':id}, {$push:{'diagnoses':{"id":diagnosis['_id'], "date":diagnosis['date']}}});
@@ -25,7 +28,6 @@ exports.addDiagnosis = async (req,res,next)=>{
 }
 exports.updateDiagnosis = async (req,res,next)=>{
     try {
-        let unwrap = ({_id, date, diagnosis, diagnosisTLDR, TNMStage}) => ({"parent":_id, date, diagnosis, diagnosisTLDR, TNMStage});
         var id = req.body['_id'];
         var diagnosis = await Diagnosis.updateOne({'_id':id}, unwrap(req.body));
         if (req.body['descriptionTLDR']){
