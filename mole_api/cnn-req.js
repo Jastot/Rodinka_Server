@@ -30,7 +30,7 @@ function reqCNN(buffer, callback){
         });
     });
     req.on('error', err=>{
-        throw exception(`HTTP REQUEST ERROR: ${err}`);
+        console.log(`HTTP REQUEST ERROR: ${err}`);
     });
     req.write(data);
     req.end();
