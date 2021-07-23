@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const connectDB = async() => {
     const conn = await mongoose.connect(process.env.MONGO_URI, {
+        // user: process.env.MONGO_LOGIN,
+        // pass: process.env.MONGO_PWD,
+        auth:{
+            authdb:"admin"
+        },
         useNewUrlParser: true, 
         useUnifiedTopology: true.valueOf,
         useCreateIndex: true,
